@@ -1,9 +1,10 @@
 import person_pb from '../person_pb';
 
-var ws = new WebSocket('ws://localhost:3000');
-//ws.binaryType = 'arraybuffer';
+// Create WebSocket connection.
+const socket = new WebSocket('ws://localhost:3000');
 
-ws.onopen = function open() {
+// Connection opened
+socket.addEventListener('open', function (event) {
     var person = new person_pb.Person(); 
 
     person.setName('Sergey');
@@ -11,17 +12,10 @@ ws.onopen = function open() {
     person.setEmail('morjjj@gmail.com');
 
     var bytes = person.serializeBinary();
-    ws.send(bytes);
-};
+    socket.send(bytes);
+});
 
-// ws.on('error', function error() {
-//     console.log('Error connecting!');
-// });
-
-// ws.on('message', function(data, flags) {
-//     console.log('Message: ' + data);
-// });
-
-// ws.on('close', function(code, message) {
-//     console.log('Disconnection: ' + code + ', ' + message);
-// });
+// Listen for messages
+socket.addEventListener('message', function (event) {
+    console.log('Message from server', event.data);
+});

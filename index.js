@@ -1,7 +1,6 @@
 
 
 const WebSocketServer = require('uws').Server;
-const wss = new WebSocketServer({ port: 3000 });
 
 const express = require('express');
 const path = require('path');
@@ -14,8 +13,6 @@ app.set('view engine', 'html');
 
 app.use('/assets', express.static(path.join(__dirname, 'dist')))
 
-
-
 app.get('/', function (req, res) {
   res.render('index');
 })
@@ -23,6 +20,9 @@ app.get('/', function (req, res) {
 app.listen(7200, function () {
   console.log('Example app listening on port 3000!')
 })
+
+
+const wss = new WebSocketServer({ port: 3000 });
 
 var Person = require('./person_pb').Person;
 
